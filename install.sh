@@ -1,5 +1,19 @@
 #!/bin/bash
 
+# SETUP SUMMARY:
+# This script sets up the "desktop-commander" application by:
+# 1. Ensuring Node.js v18+ is installed (downloads v22.14.0 from nodejs.org if needed)
+# 2. Running the setup for @wonderwhy-er/desktop-commander package from npm registry
+#
+# EXTERNAL SERVICES CONNECTED:
+# - https://nodejs.org/dist/ (downloads Node.js installer)
+# - npm registry (downloads @wonderwhy-er/desktop-commander package)
+#
+# PRIVACY CONCERNS:
+# - Downloads and executes code from external npm package @wonderwhy-er/desktop-commander
+# - Requires sudo privileges for Node.js installation
+# - Unknown data collection/transmission by desktop-commander package
+
 # Exit on error
 set -e
 
