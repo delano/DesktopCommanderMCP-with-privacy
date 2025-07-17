@@ -48,23 +48,25 @@ We aim to achieve:
 
 ### Common Development Commands
 
+**⚠️ Package Manager: Use `pnpm` instead of `npm` for all commands**
+
 **Build and Development**
-- `npm run build` - Build TypeScript to JavaScript in dist/ directory
-- `npm run watch` - Watch for TypeScript changes and rebuild automatically
-- `npm run clean` - Remove built files in dist/
+- `pnpm run build` - Build TypeScript to JavaScript in dist/ directory
+- `pnpm run watch` - Watch for TypeScript changes and rebuild automatically
+- `pnpm run clean` - Remove built files in dist/
 
 **Testing**
-- `npm test` - Run all tests using the comprehensive test runner
-- `npm run test:debug` - Run tests with Node.js debugger attached
+- `pnpm test` - Run all tests using the comprehensive test runner
+- `pnpm run test:debug` - Run tests with Node.js debugger attached
 
 **Setup and Installation**
-- `npm run setup` - Build and configure Claude Desktop integration
-- `npm run setup:debug` - Setup with Node.js inspector for debugging
+- `pnpm run setup` - Build and configure Claude Desktop integration
+- `pnpm run setup:debug` - Setup with Node.js inspector for debugging
 
 **Debugging and Analysis**
-- `npm run start:debug` - Start server with Node.js inspector on port 9229
-- `npm run logs:view` - View fuzzy search logs (local only)
-- `npm run logs:analyze` - Analyze fuzzy search patterns and performance
+- `pnpm run start:debug` - Start server with Node.js inspector on port 9229
+- `pnpm run logs:view` - View fuzzy search logs (local only)
+- `pnpm run logs:analyze` - Analyze fuzzy search patterns and performance
 
 ### Architecture Overview
 
@@ -116,9 +118,9 @@ The test suite uses a custom runner (`test/run-all-tests.js`) that builds the pr
 ### Development Workflow
 
 1. **Make changes** to TypeScript source files
-2. **Run tests** with `npm test` to verify functionality
-3. **Build** with `npm run build` to compile TypeScript
-4. **Test integration** with `npm run setup` to configure Claude Desktop
+2. **Run tests** with `pnpm test` to verify functionality
+3. **Build** with `pnpm run build` to compile TypeScript
+4. **Test integration** with `pnpm run setup` to configure Claude Desktop
 
 ### Important Notes
 
