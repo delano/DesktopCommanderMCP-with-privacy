@@ -1,7 +1,7 @@
 # Desktop Commander MCP (with Privacy fork) - WIP
 
 > [!NOTE]
-> You're reading this document on a fork of Desktop Commander. It's significantly modified from the [original version](https://github.com/wonderwhy-er/DesktopCommanderMCP/blob/main/README.md).
+> You're reading this document on a fork of Desktop Commander. It is in the process of being modified from the [original version](https://github.com/wonderwhy-er/DesktopCommanderMCP/blob/main/README.md).
 
 ### Search, update, manage files and run terminal commands with AI
 
