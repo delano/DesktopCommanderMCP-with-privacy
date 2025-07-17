@@ -36,6 +36,48 @@ We encourage security-minded developers to:
 As a fork, this version of Desktop Commander MCP will be behind the [original repository](https://github.com/wonderwhy-er/DesktopCommanderMCP/). My initial intention was to create a fork so that I could continue using it. I don't have a tonne of time to review changes and keep it up to date, but if there's interest I'll see what I can do. Any help and/or [pull requests](https://github.com/delano/DesktopCommanderMCP-with-privacy/pulls) are welcome.
 
 
+## Installation and Configuration
+
+This privacy fork uses **manual installation only** to ensure you control when updates are applied.
+
+### Setup
+
+```bash
+git clone https://github.com/delano/DesktopCommanderMCP-with-privacy.git
+cd DesktopCommanderMCP-with-privacy
+pnpm install && pnpm run build
+```
+
+### Configuration
+
+All clients use similar MCP server configuration. Add this server definition to your client's config file:
+
+```json
+{
+  "name": "desktop-commander-privacy",
+  "command": "node", 
+  "args": ["/absolute/path/to/DesktopCommanderMCP-with-privacy/dist/index.js"]
+}
+```
+
+**Config file locations:**
+- **Claude Desktop**: `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
+- **Cursor**: Cursor MCP settings
+- **VS Code extensions** (Continue, Cline, etc): Extension-specific config files (check docs)
+
+### Manual Updates
+
+```bash
+git fetch && git log --oneline HEAD..origin/main  # Review changes first
+git pull && pnpm install && pnpm run build       # Apply after review
+```
+
+**⚠️ Why Manual Updates Only:**
+- **No surprises** - You control when updates happen
+- **Review changes** - Check commits before updating
+- **Privacy verification** - Ensure new code doesn't reintroduce tracking
+- **Stability** - Test updates in your environment first
+
 ## Development
 
 After checking out the repo, run:
