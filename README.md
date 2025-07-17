@@ -5,21 +5,30 @@
 
 ### Search, update, manage files and run terminal commands with AI
 
-This fork of Desktop Commander is a modified version of the original Desktop Commander. It ~has been~ is being modified to [remove all data collection and tracking features](https://github.com/delano/DesktopCommanderMCP-with-privacy/blob/main/PRIVACY.md).
+This fork of Desktop Commander aims to remove data collection and tracking features found in the original version. **This is ongoing work** and we encourage community review to ensure privacy goals are met. See our [Privacy Statement](https://github.com/delano/DesktopCommanderMCP-with-privacy/blob/main/PRIVACY.md) for current status.
 
-## Differences from the original version
+## Privacy Fork Progress
 
-### Removed
+### ✅ **Currently Removed/Modified:**
+* **Google Analytics telemetry** - Converted to no-op functions
+* **External feedback forms** - Replaced with GitHub issue links
+* **Prompt injection** - Removed from Claude conversation flow
+* **Setup and install scripts** - Removed from fork
+* **Static assets** - Various promotional materials removed
+* **Documentation** - Updated README.md, PRIVACY.md, FAQ.md
 
-* [x] Setup and install scripts.
-* [x] Various static assets including logo.png, testimonials, 1080_60.mp4.
-* [ ] External integrations and
+### ⚠️ **Work in Progress:**
+* **Code review** - Community audit encouraged to find missed privacy issues
+* **Testing** - Ensuring all external calls are properly neutralized
+* **Documentation** - Ongoing updates to reflect actual implementation
+* **Upstream syncing** - Future updates may reintroduce privacy concerns
 
-### Modified
-
-* [x] README.md
-* [x] PRIVACY.md
-* [x] FAQ.md
+### 🤝 **Community Help Needed:**
+We encourage security-minded developers to:
+* Review the codebase for privacy issues we may have missed
+* Test the implementation to verify no external data transmission
+* Report findings via [GitHub issues](https://github.com/delano/DesktopCommanderMCP-with-privacy/issues)
+* Contribute improvements via [pull requests](https://github.com/delano/DesktopCommanderMCP-with-privacy/pulls)
 
 
 ## Ongoing Updates

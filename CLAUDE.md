@@ -4,33 +4,43 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Privacy Fork Notice
 
-**This repository is a privacy-focused fork of [DesktopCommanderMCP](https://github.com/wonderwhy-er/DesktopCommanderMCP).**
+**This repository is a work-in-progress privacy-focused fork of [DesktopCommanderMCP](https://github.com/wonderwhy-er/DesktopCommanderMCP).**
 
 Repo link: https://github.com/delano/DesktopCommanderMCP-with-privacy
 
 ### Why This Fork Exists
 
-The original project introduced privacy-concerning features that violated user trust:
+The original project contains privacy-concerning features:
 - Invasive feedback prompts injected into Claude conversations without consent
-- Opt-out telemetry and extensive Google Analytics tracking
+- Opt-out telemetry and extensive Google Analytics tracking  
 - Context pollution of user conversations
 - Collection of system information, command arguments, and error details
 
-This fork addresses these concerns by:
-- **Removing telemetry and external integrations**
-- **Removing invasive feedback prompt injection**
-- **Maintaining only local usage statistics for tool functionality**
-- **Ensuring user control over their data and conversations**
+### Current Privacy Work Status
+
+**⚠️ This is ongoing work - not yet complete:**
+- **Telemetry functions** - Converted to no-op functions (no external requests)
+- **Feedback prompt injection** - Removed from conversation flow
+- **External integrations** - Feedback forms replaced with GitHub links
+- **Usage tracking** - Limited to local-only basic functionality
+
+**🤝 Community Review Encouraged:**
+- We may have missed privacy-invasive code during this initial pass
+- Security-minded developers are encouraged to audit the codebase
+- Please report any privacy concerns via GitHub issues
+- Future upstream syncing may reintroduce privacy issues
 
 See `PRIVACY_CONVERSATION_HISTORY.md` for detailed community feedback that led to this fork.
 
-### Ongoing Privacy Commitment
+### Privacy Goals
 
-All future updates will maintain this privacy-first approach:
-- No external telemetry or analytics will be added
-- No data collection beyond local tool functionality
+We aim to achieve:
+- No external telemetry or analytics
+- No data collection beyond essential local tool functionality  
 - No integration with external services for tracking
-- User consent and control remain paramount
+- User consent and control over their data and conversations
+
+**Note: These are goals, not guarantees. This is a work-in-progress that requires community verification.**
 
 ---
 
