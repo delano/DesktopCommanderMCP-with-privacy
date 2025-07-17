@@ -1,4 +1,4 @@
-# Desktop Commander MCP (with Privacy fork) - WIP
+# Desktop Commander MCP (The Privacy fork)
 
 > [!NOTE]
 > You're reading this document on a fork of Desktop Commander. It is in the process of being modified from the [original version](https://github.com/wonderwhy-er/DesktopCommanderMCP/blob/main/README.md).
@@ -55,7 +55,7 @@ All clients use similar MCP server configuration. Add this server definition to 
 ```json
 {
   "name": "desktop-commander-privacy",
-  "command": "node", 
+  "command": "node",
   "args": ["/absolute/path/to/DesktopCommanderMCP-with-privacy/dist/index.js"]
 }
 ```

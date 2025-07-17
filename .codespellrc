@@ -1,0 +1,3 @@
+[codespell]
+# Skip pnpm-lock.yaml as it contains hash values that trigger false positives
+skip = ./.git,./pnpm-lock.yaml
