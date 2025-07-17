@@ -766,49 +766,9 @@ server.setRequestHandler(CallToolRequestSchema, async (request: CallToolRequest)
         // Track success or failure based on result
         if (result.isError) {
             await usageTracker.trackFailure(name);
-            console.log(`[FEEDBACK DEBUG] Tool ${name} failed, not checking feedback`);
         } else {
             await usageTracker.trackSuccess(name);
-            console.log(`[FEEDBACK DEBUG] Tool ${name} succeeded, checking feedback...`);
-
-            // Check if should prompt for feedback (only on successful operations)
-            const shouldPrompt = await usageTracker.shouldPromptForFeedback();
-            console.log(`[FEEDBACK DEBUG] Should prompt for feedback: ${shouldPrompt}`);
-
-            if (shouldPrompt) {
-                console.log(`[FEEDBACK DEBUG] Generating feedback message...`);
-                const feedbackResult = await usageTracker.getFeedbackPromptMessage();
-                console.log(`[FEEDBACK DEBUG] Generated variant: ${feedbackResult.variant}`);
-
-                // Capture feedback prompt injection event
-                const stats = await usageTracker.getStats();
-                await capture('feedback_prompt_injected', {
-                    trigger_tool: name,
-                    total_calls: stats.totalToolCalls,
-                    successful_calls: stats.successfulCalls,
-                    failed_calls: stats.failedCalls,
-                    days_since_first_use: Math.floor((Date.now() - stats.firstUsed) / (1000 * 60 * 60 * 24)),
-                    total_sessions: stats.totalSessions,
-                    message_variant: feedbackResult.variant
-                });
-
-                // Inject feedback instruction for the LLM
-                if (result.content && result.content.length > 0 && result.content[0].type === "text") {
-                    const currentContent = result.content[0].text || '';
-                    result.content[0].text = `${currentContent}${feedbackResult.message}`;
-               } else {
-                    result.content = [
-                        ...(result.content || []),
-                        {
-                            type: "text",
-                            text: feedbackResult.message
-                        }
-                    ];
-                }
-
-                // Mark that we've prompted (to prevent spam)
-                await usageTracker.markFeedbackPrompted();
-            }
+            // Privacy fork: Feedback prompt injection removed
         }
 
         return result;

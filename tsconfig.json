@@ -4,6 +4,8 @@
     "module": "Node16",
     "moduleResolution": "node16",
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "strict": true,
     "outDir": "./dist",
     "rootDir": "./src",
@@ -12,13 +14,12 @@
     "diagnostics": true,
     "extendedDiagnostics": true,
     "listEmittedFiles": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"]
+    },
     "types": ["node"]
   },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }

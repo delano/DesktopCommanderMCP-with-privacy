@@ -1,69 +1,49 @@
 {
-  "name": "@wonderwhy-er/desktop-commander",
+  "name": "desktop-commander-with-privacy",
   "version": "0.2.6",
-  "description": "MCP server for terminal operations and file editing",
+  "description": "MCP server for terminal operations with the same (or fewer) features and enhanced privacy (forked from desktop-commander)",
   "license": "MIT",
-  "author": "Eduards Ruzga",
-  "homepage": "https://github.com/wonderwhy-er/DesktopCommanderMCP",
-  "bugs": "https://github.com/wonderwhy-er/DesktopCommanderMCP/issues",
+  "author": "delano",
+  "homepage": "https://github.com/delano/DesktopCommanderMCP-with-privacy",
+  "bugs": "https://github.com/delano/DesktopCommanderMCP-with-privacy/issues",
   "type": "module",
   "engines": {
     "node": ">=18.0.0"
   },
   "bin": {
-    "desktop-commander": "dist/index.js",
-    "setup": "dist/setup-claude-server.js"
+    "desktop-commander": "dist/index.js"
   },
   "files": [
-    "dist",
-    "logo.png",
-    "testemonials"
+    "dist"
   ],
   "scripts": {
-    "open-chat": "open -n /Applications/Claude.app",
-    "sync-version": "node scripts/sync-version.js",
+    "build": "tsc && chmod +x dist/*.js",
     "bump": "node scripts/sync-version.js --bump",
-    "bump:minor": "node scripts/sync-version.js --bump --minor",
     "bump:major": "node scripts/sync-version.js --bump --major",
-    "build": "tsc && shx cp setup-claude-server.js dist/ && shx chmod +x dist/*.js",
-    "watch": "tsc --watch",
+    "bump:minor": "node scripts/sync-version.js --bump --minor",
+    "clean": "rm -rf dist",
+    "link:local": "pnpm run build && pnpm link",
+    "logs:analyze": "pnpm run build && node scripts/analyze-fuzzy-logs.js",
+    "logs:clear": "pnpm run build && node scripts/clear-fuzzy-logs.js",
+    "logs:export": "pnpm run build && node scripts/export-fuzzy-logs.js",
+    "logs:view": "pnpm run build && node scripts/view-fuzzy-logs.js",
+    "prepare": "npm run build",
+    "setup": "pnpm install && pnpm run build",
+    "setup:debug": "pnpm install && pnpm run build --debug",
     "start": "node dist/index.js",
     "start:debug": "node --inspect-brk=9229 dist/index.js",
-    "setup": "npm install && npm run build && node setup-claude-server.js",
-    "setup:debug": "npm install && npm run build && node setup-claude-server.js --debug",
-    "prepare": "npm run build",
-    "clean": "shx rm -rf dist",
+    "sync-version": "node scripts/sync-version.js",
     "test": "node test/run-all-tests.js",
     "test:debug": "node --inspect test/run-all-tests.js",
-    "link:local": "npm run build && npm link",
-    "unlink:local": "npm unlink",
-    "inspector": "npx @modelcontextprotocol/inspector dist/index.js",
-    "logs:view": "npm run build && node scripts/view-fuzzy-logs.js",
-    "logs:analyze": "npm run build && node scripts/analyze-fuzzy-logs.js",
-    "logs:clear": "npm run build && node scripts/clear-fuzzy-logs.js",
-    "logs:export": "npm run build && node scripts/export-fuzzy-logs.js"
+    "unlink:local": "pnpm unlink",
+    "watch": "tsc --watch"
   },
   "publishConfig": {
     "access": "public"
   },
   "keywords": [
-    "mcp",
-    "model-context-protocol",
-    "terminal",
-    "claude",
-    "ai",
-    "command-line",
-    "process-management",
-    "file-editing",
-    "code-editing",
-    "diff",
-    "patch",
-    "block-editing",
-    "file-system",
-    "text-manipulation",
-    "code-modification",
-    "surgical-edits",
-    "file-operations"
+    "privacy",
+    "desktop commander"
   ],
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.8.0",
@@ -79,7 +59,6 @@
     "commander": "^13.1.0",
     "nexe": "^5.0.0-beta.4",
     "nodemon": "^3.0.2",
-    "shx": "^0.3.4",
     "typescript": "^5.3.3"
   }
 }

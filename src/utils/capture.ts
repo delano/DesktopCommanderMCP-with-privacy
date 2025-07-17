@@ -1,38 +1,7 @@
+// Privacy fork: Minimal imports for local error sanitization only
 import {platform} from 'os';
-import {randomUUID} from 'crypto';
-import * as https from 'https';
-import {configManager} from '../config-manager.js';
-import { currentClient } from '../server.js';
 
-let VERSION = 'unknown';
-try {
-    const versionModule = await import('../version.js');
-    VERSION = versionModule.VERSION;
-} catch {
-    // Continue without version info if not available
-}
-
-// Will be initialized when needed
-let uniqueUserId = 'unknown';
-
-// Function to get or create a persistent UUID
-async function getOrCreateUUID(): Promise<string> {
-    try {
-        // Try to get the UUID from the config
-        let clientId = await configManager.getValue('clientId');
-
-        // If it doesn't exist, create a new one and save it
-        if (!clientId) {
-            clientId = randomUUID();
-            await configManager.setValue('clientId', clientId);
-        }
-
-        return clientId;
-    } catch (error) {
-        // Fallback to a random UUID if config operations fail
-        return randomUUID();
-    }
-}
+// Privacy fork: Version tracking removed
 
 
 /**
@@ -72,163 +41,33 @@ export function sanitizeError(error: any): { message: string, code?: string } {
 
 
 /**
- * Send an event to Google Analytics
- * @param event Event name
- * @param properties Optional event properties
+ * Placeholder function for event capture - privacy fork removes external telemetry
+ * @param captureURL Unused in privacy fork
+ * @param event Event name for local logging only
+ * @param properties Optional event properties for local logging only
  */
 export const captureBase = async (captureURL: string, event: string, properties?: any) => {
-    try {
-        // Check if telemetry is enabled in config (defaults to true if not set)
-        const telemetryEnabled = await configManager.getValue('telemetryEnabled');
-
-        // If telemetry is explicitly disabled or GA credentials are missing, don't send
-        if (telemetryEnabled === false || !captureURL) {
-            return;
-        }
-
-        // Get or create the client ID if not already initialized
-        if (uniqueUserId === 'unknown') {
-            uniqueUserId = await getOrCreateUUID();
-        }
-
-        // Get current client information for all events
-        let clientContext = {};
-        if (currentClient) {
-            clientContext = {
-                client_name: currentClient.name,
-                client_version: currentClient.version,
-            };
-        }
-
-        // Create a deep copy of properties to avoid modifying the original objects
-        // This ensures we don't alter error objects that are also returned to the AI
-        let sanitizedProperties;
-        try {
-            sanitizedProperties = properties ? JSON.parse(JSON.stringify(properties)) : {};
-        } catch (e) {
-            sanitizedProperties = {}
-        }
-
-        // Sanitize error objects if present
-        if (sanitizedProperties.error) {
-            // Handle different types of error objects
-            if (typeof sanitizedProperties.error === 'object' && sanitizedProperties.error !== null) {
-                const sanitized = sanitizeError(sanitizedProperties.error);
-                sanitizedProperties.error = sanitized.message;
-                if (sanitized.code) {
-                    sanitizedProperties.errorCode = sanitized.code;
-                }
-            } else if (typeof sanitizedProperties.error === 'string') {
-                sanitizedProperties.error = sanitizeError(sanitizedProperties.error).message;
-            }
-        }
-
-        // Remove any properties that might contain paths
-        const sensitiveKeys = ['path', 'filePath', 'directory', 'file_path', 'sourcePath', 'destinationPath', 'fullPath', 'rootPath'];
-        for (const key of Object.keys(sanitizedProperties)) {
-            const lowerKey = key.toLowerCase();
-            if (sensitiveKeys.some(sensitiveKey => lowerKey.includes(sensitiveKey)) &&
-                lowerKey !== 'fileextension') { // keep fileExtension as it's safe
-                delete sanitizedProperties[key];
-            }
-        }
-    
-        // Is MCP installed with DXT
-        let isDXT: string = 'false';
-        if (process.env.MCP_DXT) {
-            isDXT = 'true';
-        }
-
-        // Is MCP running in a Docker container
-        let isDocker: string = 'false';
-        if (process.env.MCP_CLIENT_DOCKER) {
-            isDocker = 'true'
-        }
-        // Prepare standard properties
-        const baseProperties = {
-            timestamp: new Date().toISOString(),
-            platform: platform(),
-            isDocker,
-            isDXT,
-            app_version: VERSION,
-            engagement_time_msec: "100"
-        };
-
-        // Combine with sanitized properties and client context
-        const eventProperties = {
-            ...baseProperties,
-            ...clientContext,
-            ...sanitizedProperties
-        };
-
-        // Prepare GA4 payload
-        const payload = {
-            client_id: uniqueUserId,
-            non_personalized_ads: false,
-            timestamp_micros: Date.now() * 1000,
-            events: [{
-                name: event,
-                params: eventProperties
-            }]
-        };
-
-        // Send data to Google Analytics
-        const postData = JSON.stringify(payload);
-
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Content-Length': Buffer.byteLength(postData)
-            }
-        };
-
-        const req = https.request(captureURL, options, (res) => {
-            // Response handling (optional)
-            let data = '';
-            res.on('data', (chunk) => {
-                data += chunk;
-            });
-
-            res.on('end', () => {
-                if (res.statusCode !== 200 && res.statusCode !== 204) {
-                    // Optional debug logging
-                    // console.debug(`GA tracking error: ${res.statusCode} ${data}`);
-                }
-            });
-        });
-
-        req.on('error', () => {
-            // Silently fail - we don't want analytics issues to break functionality
-        });
-
-        // Set timeout to prevent blocking the app
-        req.setTimeout(3000, () => {
-            req.destroy();
-        });
-
-        // Send data
-        req.write(postData);
-        req.end();
-
-    } catch {
-        // Silently fail - we don't want analytics issues to break functionality
-    }
+    // Privacy fork: All external telemetry removed
+    // This function is kept as a no-op to maintain API compatibility
+    return;
 };
 
-export const capture_call_tool = async (event: string, properties?:any) => {
-    const GA_MEASUREMENT_ID = 'G-35YKFM782B'; // Replace with your GA4 Measurement ID
-    const GA_API_SECRET = 'qM5VNk6aQy6NN5s-tCppZw'; // Replace with your GA4 API Secret
-    const GA_BASE_URL = `https://www.google-analytics.com/mp/collect?measurement_id=${GA_MEASUREMENT_ID}&api_secret=${GA_API_SECRET}`;
-    const GA_DEBUG_BASE_URL = `https://www.google-analytics.com/debug/mp/collect?measurement_id=${GA_MEASUREMENT_ID}&api_secret=${GA_API_SECRET}`;    
-    return await captureBase(GA_BASE_URL, event, properties);
+/**
+ * Privacy fork: No-op function for tool call events
+ * @param event Event name (logged locally only)
+ * @param properties Event properties (logged locally only)
+ */
+export const capture_call_tool = async (event: string, properties?: any) => {
+    // Privacy fork: All external telemetry removed
+    return;
 }
 
+/**
+ * Privacy fork: No-op function for general events
+ * @param event Event name (logged locally only)
+ * @param properties Event properties (logged locally only)
+ */
 export const capture = async (event: string, properties?: any) => {
-    const GA_MEASUREMENT_ID = 'G-NGGDNL0K4L'; // Replace with your GA4 Measurement ID
-    const GA_API_SECRET = '5M0mC--2S_6t94m8WrI60A'; // Replace with your GA4 API Secret
-    const GA_BASE_URL = `https://www.google-analytics.com/mp/collect?measurement_id=${GA_MEASUREMENT_ID}&api_secret=${GA_API_SECRET}`;
-    const GA_DEBUG_BASE_URL = `https://www.google-analytics.com/debug/mp/collect?measurement_id=${GA_MEASUREMENT_ID}&api_secret=${GA_API_SECRET}`;
-
-    return await captureBase(GA_BASE_URL, event, properties);
+    // Privacy fork: All external telemetry removed
+    return;
 }

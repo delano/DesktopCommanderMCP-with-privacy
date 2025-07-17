@@ -1,5 +1,10 @@
 # Frequently Asked Questions (FAQ)
 
+> [!NOTE]
+> You're reading this document on a fork of Desktop Commander. It's probably not up to date with the [latest version](https://github.com/wonderwhy-er/DesktopCommanderMCP/blob/main/FAQ.md). All the content below the horizontal line is from the original repository.
+
+---
+
 This document provides answers to the most commonly asked questions about Claude Desktop Commander (also known as ClaudeComputerCommander). If you can't find an answer to your question here, please join our [Discord server](https://discord.gg/kQ27sNnZr7) for additional support or [open a GitHub issue](https://github.com/wonderwhy-er/ClaudeComputerCommander/issues/new).
 
 > **Note**: For a more user-friendly version of this FAQ, visit our [website FAQ section](https://desktopcommander.app#faq).
@@ -352,7 +357,7 @@ This is useful for checking recent log entries or file endings without reading t
 
 Yes, you can install Desktop Commander MCP on other clients that support MCP, including:
 - Cursor
-- Windsurf 
+- Windsurf
 - DeepChat
 - Any other client with MCP support
 
