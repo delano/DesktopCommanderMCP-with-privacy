@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **This repository is a privacy-focused fork of [DesktopCommanderMCP](https://github.com/wonderwhy-er/DesktopCommanderMCP).**
 
+Repo link: https://github.com/delano/DesktopCommanderMCP-with-privacy
+
 ### Why This Fork Exists
 
 The original project introduced privacy-concerning features that violated user trust:
@@ -15,7 +17,7 @@ The original project introduced privacy-concerning features that violated user t
 - Collection of system information, command arguments, and error details
 
 This fork addresses these concerns by:
-- **Removing ALL telemetry and external integrations** 
+- **Removing telemetry and external integrations**
 - **Removing invasive feedback prompt injection**
 - **Maintaining only local usage statistics for tool functionality**
 - **Ensuring user control over their data and conversations**
